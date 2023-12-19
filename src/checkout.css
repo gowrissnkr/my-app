@@ -1,0 +1,88 @@
+#cart {
+    padding: 100px 20px 0px;
+
+}
+
+#cart h1 {
+    font-weight: 300;
+    font-size: 40px;
+    letter-spacing: -2px;
+}
+
+.cart-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.left-side {
+    width: 52%;
+    margin-top: 60px;
+}
+
+.left-side p {
+    color: rgb(27, 25, 25);
+    letter-spacing: 1px;
+    font-size: 20px;
+}
+
+.item {
+    display: flex;
+    width: 600px;
+    margin-top: 25px;
+    border-radius: 4px;
+    padding: 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 40%);
+}
+
+.item img {
+    width: 80px;
+    height: 100px;
+    border-radius: 4px;
+}
+
+.item .detail {
+    padding-left: 15px;
+}
+
+.item .detail p {
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.item .detail p {
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.right-side {
+    width: 45%;
+    margin-top: 60px;
+}
+
+.total-amount {
+    width: 450px;
+    margin-top: 50px;
+    margin-left: 50px;
+    border-radius: 4px;
+    padding: 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 40%);
+}
+
+.total-amount h2 {
+    letter-spacing: 2px;
+    font-weight: 200;
+}
+
+.total-amount p {
+    margin-top: 20px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-weight: 200;
+}
+
+.total-amount p span {
+    font-weight: bold;
+    font-size: 20px;
+}

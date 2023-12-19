@@ -1,0 +1,96 @@
+ const [productList, setProductList] = useState([]) // Setting Product 
+  const [searchProducts, setSearchProducts] = useState([]) // Filtered Products
+  const [count, setCount] = useState(0) // Cart Count
+  const [cartProduct, setCartProduct] = useState([]) // Cart Product
+  const [productName, setProductName] = useState("")
+
+  // Filtering by Color
+  const handleChange = (e) => {
+    let value = e.target.value;
+    let filterValue = productList.filter((user) => {
+      if (user.color.toLowerCase().includes(value.toLowerCase())) {
+        return true
+      }
+    })
+    setSearchProducts(filterValue)
+  }
+
+
+  const onAdd = () => {
+    setCount(count + 1)
+  }
+  // FIltering by Gender
+  const genderChange = (e) => {
+    let value = e.target.value;
+    let filterGender = productList.filter((user) => {
+      if (user.gender.toLowerCase().includes(value.toLowerCase())) {
+        return true
+      }
+    })
+    setSearchProducts(filterGender)
+  }
+
+  // Filtering by Price
+  const priceChange = (e) => {
+    let value = e.target.value;
+    let filterPrice = productList.filter((user) => {
+      if (user.price.includes(value)) {
+        return true
+      }
+    })
+    setSearchProducts(filterPrice)
+
+  }
+
+  // FIltering by type
+
+  const typeChange = (e) => {
+    let value = e.target.value;
+    let filterType = productList.filter((user) => {
+      if (user.type.toLowerCase().includes(value.toLowerCase())) {
+        return true
+      }
+    })
+    setSearchProducts(filterType)
+  }
+
+  // FIletered by Search
+  const search = (e) => {
+    let typeProductName = e.target.value;
+    setProductName(e.target.value)
+    let userTyped = productList.filter((user, i) => {
+      if (user.name.toLowerCase().includes(typeProductName.toLowerCase())) {
+        return true
+      }
+    })
+    setSearchProducts(userTyped)
+  }
+  //  Rendering Products
+  useEffect(() => {
+    axios.get("https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/catalogue.json")
+      .then((res) => {
+        setProductList(res.data)
+      })
+  })
+
+  <BrowserRouter>
+        {/* Header Component  */}
+        <TeeRexHeader count={count} />
+
+        {/* Product */}
+        <Product productList={productList}
+          setSearchProducts={setSearchProducts}
+          searchProducts={searchProducts}
+          search={search}
+          onAdd = {onAdd}
+          productName={productName}
+          handleChange={handleChange}
+          genderChange={genderChange}
+          priceChange={priceChange}
+          typeChange={typeChange}
+
+        />
+        {/* <Routes>
+          <Route path="/checkout" element={ <Checkout />} />
+        </Routes> */}
+      </BrowserRouter>
