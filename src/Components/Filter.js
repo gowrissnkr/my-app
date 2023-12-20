@@ -1,8 +1,13 @@
 import CheckBox from "./CheckBox"
 
-const Filter = ({ handleCategoryChange }) => {
+const Filter = ({showFilter }) => {
+    const handleCategoryChange = (event) => {
+        const category = event.target.value
+        console.log(category)
+    }
+    
     return (
-        <div id="dropdown" className="hidden lg:block max-h-[500px] z-10 w-[15%] p-2 pl-10 bg-white rounded-lg shadow dark:bg-gray-700 ml-[60px]">
+        <div id="dropdown" className={`${showFilter ? "block absolute w-[250px] right-[10px]" : "hidden"} lg:block max-h-[500px] z-10 w-[15%] p-2 pl-10 bg-white rounded-lg shadow dark:bg-gray-700 ml-[60px]`}>
             <h6 className="mb-3 text-sm font-medium text-gray-900 dark:text-white">
                 Color
             </h6>
