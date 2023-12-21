@@ -1,29 +1,16 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import Filter from "./Filter"
 import { useState } from "react"
-import { filteredData } from "../features/dataSlice"
+import { searchFilterProduct } from "../features/productSlice"
+import { debounceFun } from "../utlis/debounce"
 
 const SearchBox = ({ showFilter, setShowFilter }) => {
     const dispatch = useDispatch()
-    // const { allData } = useSelector((state) => state)
     const [searchItem, setSearchItem] = useState("")
 
-    const debounceFun = (func, delay) => {
-        let timer;
-        return function (...args) {
-            if (timer) {
-                clearTimeout(timer)
-            }
-            timer = setTimeout(() => {
-                func(...args)
-            }, delay)
-        }
-    }
-
     const handleSearch = debounceFun((value) => {
-        // const filterData = allData.filter((data) => data.color.toLowerCase().includes(value) || data.type.toLowerCase().includes(value) || data.name.toLowerCase().includes(value))
-        dispatch(filteredData(value))
-    })
+        dispatch(searchFilterProduct(value))
+    },500)
 
     const handleChange = (event) => {
         const { value } = event.target

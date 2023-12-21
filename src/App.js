@@ -3,8 +3,10 @@ import NavBar from "./Components/NavBar";
 import "./App.css";
 import Parent from "./Components/Parent";
 import { useDispatch } from "react-redux";
-import { DATA_API } from "./constants/constant";
-import { getAllData } from "./features/dataSlice";
+import { DATA_API, ROUTE_PATH } from "./constants/constant";
+import { getAllProduct } from "./features/productSlice";
+import CartPage from "./Components/CartPage";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
 function App() {
 
@@ -18,7 +20,7 @@ function App() {
         throw new Error("Error Fetching Data")
       }
       const data = await response.json()
-      dispatch(getAllData(data))
+      dispatch(getAllProduct(data))
     }
     catch (error) {
       console.log(error)
@@ -31,9 +33,16 @@ function App() {
 
   return (
     <>
+      <Router>
       <NavBar />
-      <Parent />
+        <Routes>
+          <Route path={ROUTE_PATH.HOME} element={<Parent />} />
+          <Route path={ROUTE_PATH.CART} element={<CartPage />} />
+        </Routes>
+      </Router>
     </>
   )
 }
+
+
 export default App
