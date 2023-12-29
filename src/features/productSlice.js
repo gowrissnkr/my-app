@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { filterByCategory } from "../utlis/filterByCategory";
 
 
 const initialState = {
@@ -20,7 +21,11 @@ const productSlice = createSlice(
                 state.filterProduct = state.allProduct.filter((data) => data.color.toLowerCase().includes(payload.toLowerCase()) || data.type.toLowerCase().includes(payload.toLowerCase()) || data.name.toLowerCase().includes(payload.toLowerCase()))
             },
             selectedFilterProduct(state, action) {
-                console.log(action.payload)
+                const category = action.payload
+                if (category) {
+                    const filt = filterByCategory(state,category)
+                    state.filterProduct = filt;
+                }
             },
             addToCart(state, action) {
                 const existingItem = state.cart.find((cartItem) => cartItem.id === action.payload.id)

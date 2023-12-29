@@ -11,17 +11,39 @@ const Filter = ({ showFilter }) => {
 
     const handleCategoryChange = async (event) => {
         const isChecked = event.target.checked
-        const { name, value } = event.target
-        console.log(name, value)
+        const { title, value } = event.target
         if (isChecked) {
-            setSelectedItems((prevState) => [...prevState, { name, value }])
+            setSelectedItems((prevFilters) => {
+                const existingFilterItem = prevFilters.findIndex((filter) => filter.title === title);
+                if (existingFilterItem !== -1) {
+                    const updatedFilters = [...prevFilters];
+                    updatedFilters[existingFilterItem].values = [...updatedFilters[existingFilterItem].values, value]
+                    return updatedFilters;
+                }
+                return [...prevFilters, { title, values: [value] }];
+            });
         }
         else {
-            setSelectedItems((prevState) => prevState.filter((value) => value !== event.target.value))
+            setSelectedItems((prevState) => {
+                const updatedFilters = prevState.map((item) => {
+                    if (item.title === title) {
+                        const updatedValues = item.values.filter((item) => item !== value);
+                        if (updatedValues.length >= 1) {
+                            return { title, values: updatedValues }
+                        }
+                        else {
+                            return false
+                        }
+                    }
+                    return item;
+                })
+                return updatedFilters.filter((item) => item !== false)
+            })
         }
     }
 
     useEffect(() => {
+        console.log(selectedItems)
         dispatch(selectedFilterProduct(selectedItems))
     }, [selectedItems, dispatch])
 
@@ -49,9 +71,9 @@ const Filter = ({ showFilter }) => {
                 Price
             </h6>
             <ul className="space-y-2 text-sm mb-2" aria-labelledby="dropdownDefault">
-                <CheckBox id="250" category="price" value="250" label="0 - Rs.250" handleChange={handleCategoryChange} />
-                <CheckBox id="450" category="price" value="450" label="Rs.251 - Rs.450" handleChange={handleCategoryChange} />
-                <CheckBox id="above" category="price" value="above" label="Above Rs.450" handleChange={handleCategoryChange} />
+                <CheckBox id="250" category="price" value={250} label="0 - Rs.250" handleChange={handleCategoryChange} />
+                <CheckBox id="450" category="price" value={450} label="Rs.251 - Rs.450" handleChange={handleCategoryChange} />
+                <CheckBox id="451" category="price" value={451} label="Above Rs.450" handleChange={handleCategoryChange} />
             </ul>
             <h6 className="mb-3 text-sm font-medium text-gray-900 dark:text-white">
                 Type
